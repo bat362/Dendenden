@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0c1637">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Trace Prova">
+<meta name="hub-build" content="TRC-20260930-01">
+<meta name="description" content="Trace için bağımsız, video referanslı hafıza ve çizim antrenmanı.">
+<title>Trace Hub · Hafızadan çiz</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Crect width='80' height='80' rx='20' fill='%231e46f8'/%3E%3Cpath d='M20 52L32 30H56L44 52' fill='none' stroke='%23ffed70' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<style>
+:root{color-scheme:dark;--bg:#0c1637;--card:#152448;--muted:#a8b8d7;--ink:#f7f8ff;--yellow:#ffed77;--mint:#6de9dc;--border:#adc5ff26}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}button,select,input{font:inherit}button{cursor:pointer;touch-action:manipulation}button:disabled{opacity:.45;cursor:default}button:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid var(--mint);outline-offset:4px}[hidden]{display:none!important}
+#home{width:min(600px,100%);margin:auto;padding:max(22px,env(safe-area-inset-top)) 22px max(26px,env(safe-area-inset-bottom))}.topline{display:flex;align-items:center;justify-content:space-between;font-size:11px;letter-spacing:2px;color:#beccec;font-weight:800}.topline b{border:1px solid var(--border);border-radius:30px;font-size:10px;letter-spacing:.7px;padding:7px 10px}.hero{position:relative;margin:25px 0 22px;border-radius:27px;overflow:hidden;background:linear-gradient(145deg,#2858ff,#122daa);border:1px solid #85a3ff45;padding:25px;min-height:274px}.hero h1{font-size:54px;letter-spacing:-2.5px;line-height:.95;margin:0 0 14px;font-weight:900}.hero p{font-size:14px;line-height:1.6;color:#e0e8ff;margin:0;max-width:240px;position:relative;z-index:1}.hero svg{position:absolute;right:-32px;bottom:-13px;width:232px;opacity:.75}.hero .tag{position:relative;margin-top:24px;display:inline-block;font-size:11px;border-radius:24px;background:#091b644f;padding:8px 11px;color:#e4eaff;border:1px solid #bed0ff33;z-index:1}.section-title{font-size:12px;letter-spacing:1px;color:#c4d2ef;font-weight:800;display:flex;justify-content:space-between;gap:10px;margin:0 0 12px}.section-title span{letter-spacing:0;color:var(--mint)}
+.mode-card{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;padding:19px;border-radius:20px;margin:10px 0;border:1px solid var(--border);background:#152448;color:#fff;text-align:left}.mode-card.primary{background:var(--yellow);border-color:var(--yellow);color:#192440}.mode-card strong{display:block;font-size:19px;letter-spacing:-.3px;margin-bottom:5px}.mode-card small{font-size:12px;line-height:1.45;color:#aebcda;display:block}.mode-card.primary small{color:#41516b}.mode-arrow{font-size:26px;font-weight:400}.explain{margin-top:21px;line-height:1.6;font-size:12px;color:#b4c3df}.explain strong{color:#e9efff}.home-bottom{margin-top:23px;padding-top:18px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px;color:#8fa2c8;font-size:10px;line-height:1.6}.refresh{border:1px solid var(--border);background:transparent;color:#bfceeb;font-size:11px;border-radius:10px;padding:10px 12px}.boot-warning{padding:13px;background:#614621;border-radius:12px;font-size:13px;line-height:1.5;margin:12px 0}
+#game{position:fixed;inset:0;height:100%;height:100dvh;overflow:hidden;background:#1443f6;touch-action:none;overscroll-behavior:none;user-select:none;-webkit-user-select:none;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}#surface{width:100%;height:100%;position:absolute;inset:0;display:block;touch-action:none}.toolbar{position:absolute;top:max(10px,env(safe-area-inset-top));left:12px;right:12px;display:flex;justify-content:space-between;align-items:center;pointer-events:none;z-index:7}.circle-btn{pointer-events:auto;border:1px solid #c5daff2b;border-radius:50%;width:40px;height:40px;display:grid;place-items:center;background:#061c6b55;color:white;font-size:23px;padding:0}.practice-tools{position:absolute;z-index:3;bottom:max(24px,calc(env(safe-area-inset-bottom) + 14px));left:18px;right:18px;display:flex;justify-content:center;gap:10px;pointer-events:none}.practice-tools button{pointer-events:auto;border:1px solid #fff3;background:#072372c9;color:#ecf4ff;padding:11px 14px;border-radius:12px;font-size:12px;font-weight:750}
+.overlay{position:absolute;z-index:6;inset:0;background:#060f29bf;backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;overflow-y:auto;padding:max(65px,calc(env(safe-area-inset-top) + 48px)) 14px max(20px,calc(env(safe-area-inset-bottom) + 12px));touch-action:pan-y}.sheet{width:min(440px,100%);max-height:100%;overflow-y:auto;border-radius:25px;background:#112044f8;border:1px solid #acc3ff36;padding:24px;box-shadow:0 22px 75px #02082466;overscroll-behavior:contain;touch-action:pan-y}.kicker{font-size:10px;font-weight:800;letter-spacing:1.7px;color:#9eb9ff}.sheet h2{font-size:32px;font-weight:850;line-height:1.05;letter-spacing:-1px;margin:10px 0 12px}.intro{font-size:13px;color:#bdcce8;line-height:1.55;margin:0 0 18px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px 10px}.field{display:flex;flex-direction:column;gap:6px;font-size:11px;color:#b9c9e6}.field select{width:100%;border:1px solid #bfd3ff29;min-height:44px;border-radius:10px;background:#1d315d;color:#f5f7ff;font-size:13px;padding:9px 8px;touch-action:manipulation}.field.full{grid-column:1/-1}.check{display:flex;gap:10px;align-items:center;font-size:12px;color:#c7d6ec;margin:13px 0;line-height:1.4;touch-action:manipulation}.check input{width:19px;height:19px;accent-color:#65e1d4}.main-btn{border:0;width:100%;background:var(--yellow);color:#162645;min-height:50px;padding:14px 12px;border-radius:13px;font-weight:850;font-size:15px;touch-action:manipulation}.secondary-btn{background:#243c69;color:#f2f6ff;margin-top:9px}.link-btn{border:0;background:transparent;color:#b7cbe8;width:100%;min-height:43px;margin-top:6px;font-size:12px;touch-action:manipulation}.settings-note{margin:13px 0 17px;font-size:10px;line-height:1.6;color:#8fa9d3}.more{margin:12px 0 15px;border-top:1px solid #bed4ff1c;padding-top:11px;font-size:12px;line-height:1.6;color:#b9c9e6}.more summary{cursor:pointer;color:#d5e3fb;font-weight:700;touch-action:manipulation}.more p{margin:9px 0}.more .field{margin-top:10px}.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:17px 0}.stat{padding:12px;background:#acc7ff0c;border:1px solid #bbd0ff15;border-radius:12px;font-size:10px;color:#a4bce0}.stat strong{display:block;font-variant-numeric:tabular-nums;color:white;font-size:25px;margin-bottom:4px}.error-reason{font-size:13px;line-height:1.55;color:#d8e5ff;padding:13px;border:1px solid #ffaabe33;background:#ff759d0b;border-radius:12px;white-space:pre-line}.micro-preview{width:100%;height:155px;background:#1542e8;border-radius:12px;margin:12px 0;display:block}.result-label{font-size:11px;line-height:1.55;color:#a8bedf;margin:12px 0}.toasts{pointer-events:none;position:absolute;z-index:5;bottom:max(90px,calc(env(safe-area-inset-bottom) + 65px));left:20px;right:20px;text-align:center;color:#edf8ff;font-size:12px}.toasts span{display:inline-block;border-radius:30px;background:#071d6bdd;padding:10px 15px;border:1px solid #b2ceff24}
+@media(max-height:760px){.overlay{align-items:flex-start;padding-top:max(56px,calc(env(safe-area-inset-top) + 45px))}.sheet{padding:18px}.sheet h2{font-size:29px}.fields{gap:8px}.micro-preview{height:120px}.intro{margin-bottom:12px}.more{margin:8px 0}.settings-note{margin:10px 0}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<main id="home">
+ <div class="topline">TRACE HUB <b>BAĞIMSIZ PROVA</b></div>
+ <section class="hero"><h1>İzle.<br>Hatırla.<br>Çiz.</h1><p>Sarı yol kaybolduğunda<br>sıra senin hafızanda.</p><span class="tag">12 kayıt şekli · sınırsız tekrar</span>
+ <svg viewBox="0 0 240 240" aria-hidden="true"><g fill="#ffffff26"><circle cx="40" cy="60" r="6"/><circle cx="85" cy="60" r="6"/><circle cx="130" cy="60" r="6"/><circle cx="175" cy="60" r="6"/><circle cx="18" cy="99" r="6"/><circle cx="63" cy="99" r="6"/><circle cx="108" cy="99" r="6"/><circle cx="153" cy="99" r="6"/><circle cx="198" cy="99" r="6"/><circle cx="40" cy="138" r="6"/><circle cx="85" cy="138" r="6"/><circle cx="130" cy="138" r="6"/><circle cx="175" cy="138" r="6"/><circle cx="63" cy="177" r="6"/><circle cx="108" cy="177" r="6"/><circle cx="153" cy="177" r="6"/></g><path d="M153 177H108L85 138L108 99H153L175 138" fill="none" stroke="#ffeb76" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/><g fill="#ffeb76"><circle cx="153" cy="177" r="9"/><circle cx="108" cy="177" r="9"/><circle cx="85" cy="138" r="9"/><circle cx="108" cy="99" r="9"/><circle cx="153" cy="99" r="9"/><circle cx="175" cy="138" r="9"/></g></svg></section>
+ <div class="section-title">ANTRENMANINI SEÇ <span id="homeBest">Rekor: —</span></div>
+ <button class="mode-card primary" type="button" data-mode="challenge"><div><strong>Video provası</strong><small>Gösterim → hafızadan çizim → süre baskısı</small></div><span class="mode-arrow">↗</span></button>
+ <button class="mode-card" type="button" data-mode="learn"><div><strong>Süresiz öğren</strong><small>Yolu yeniden izle. Hata yaptığın şekli tekrar et.</small></div><span class="mode-arrow">↗</span></button>
+ <button class="mode-card" type="button" data-mode="workshop"><div><strong>Şekil atölyesi</strong><small>Özellikle uzun yolları ve kesişimleri çalış.</small></div><span class="mode-arrow">↗</span></button>
+ <div class="explain"><strong>Hızlı çizmek tek başına yetmez.</strong> Başlangıcı ve dönüş sırasını aklında tut. Her doğru bağlantı 1 puan; bir şekil birden fazla puan kazandırır.<br><br>Bu ayrı bir Hub’dır. Diğer altı oyununa ve onların kayıtlarına dokunmaz.</div>
+ <details class="more"><summary>Referans ve sınırlar</summary><p>Gönderdiğin 98 puanlık Trace kaydındaki 12 şekil, 7 / 19 / 37 noktalı ızgaralar ve gösterim zamanları referans alındı. Süre çubuğu ölçümlerinden yaklaşık çizim süreleri çıkarıldı.</p><p>Video bir ekranın kamerayla çekimi: perspektif ve el görüntüsü taklit edilmedi. Telefonundaki özgün yerleşim ve gizli dokunma eşiği doğrulanmış değil. Parmak kaldırınca devam etme, nokta yakalama toleransı ve kaydın sonrası bu bağımsız trainer’ın tercihleridir.</p><p>Playus’a bağlanmaz; çevrimiçi sıralama veya puan gönderimi yoktur. Kod tek dosya; dışarıdan kitaplık, görsel veya ses istemez. Rekor bu tarayıcıda saklanır.</p></details>
+ <div id="bootWarning" class="boot-warning">Oyun kodu henüz çalışmadı. Dosya önizlemesi yerine yayımladığın GitHub Pages adresinden aç.</div>
+ <div class="home-bottom"><span>TRACE V1 · TRC-20260930-01<br>Diğer Hub’dan bağımsız</span><button type="button" class="refresh" id="refresh">Sürümü yenile</button></div>
+</main>
+<section id="game" hidden aria-label="Trace hafızadan çizim antrenmanı">
+ <canvas id="surface" aria-label="Sarı yolu izle; kaybolunca turkuaz başlangıçtan aynı sırayla çiz."></canvas>
+ <div class="toolbar"><button type="button" id="exit" class="circle-btn" aria-label="Trace ana ekranına dön">‹</button><button type="button" id="pause" class="circle-btn" aria-label="Duraklat" hidden>Ⅱ</button></div>
+ <div id="practiceTools" class="practice-tools" hidden><button id="hint" type="button">Yolu yeniden göster</button><button id="againShape" type="button">Bu şekli tekrar et</button></div>
+ <div id="toast" class="toasts" hidden><span></span></div>
+ <div id="overlay" class="overlay">
+  <div class="sheet">
+   <div class="kicker" id="panelKicker">TRACE V1 · KAYIT REFERANSLI</div><h2 id="panelTitle">Yolu aklında tut.</h2>
+   <p class="intro" id="panelIntro">Sarı yolu izle. Yol kaybolunca turkuaz başlangıca dokun ve noktaları <strong>aynı sırayla</strong> birleştir. Her doğru bağlantı 1 puan.</p>
+   <div id="settings">
+    <div class="fields">
+     <label class="field full">Şekil sırası<select id="route"><option value="video">Videodaki 12 şekil → üretilmiş devam</option><option value="random">Rastgele · antrenman</option></select></label>
+     <label class="field">Tempo<select id="pace"><option value="0.75">0,75× · yavaş</option><option value="1" selected>1,00× · kayıt</option><option value="1.25">1,25× · hızlı</option></select></label>
+     <label class="field">Başlangıç şekli<select id="startRound"></select></label>
+    </div>
+    <label class="check" id="guideLabel"><input type="checkbox" id="guide">Çizerken soluk yol rehberi göster</label>
+    <canvas id="mini" class="micro-preview" aria-label="Seçili çalışma şekli" hidden></canvas>
+    <details class="more"><summary>Hassasiyet ve çalışma notları</summary>
+     <label class="field">Noktayı yakalama<select id="tolerance"><option value="0.18">Dar · hassas çalışma</option><option value="0.25" selected>Normal · varsayılan</option><option value="0.32">Geniş · alışma</option></select></label>
+     <p>Bu eşik videodan ölçülemez. Normal ayar, nokta aralığının %25’i kadar yakalama yarıçapı kullanır. Çizimin görünür noktaya gelmesi yeterlidir; boşlukta kusursuz düz çizgi aranmaz.</p>
+     <p><strong>Tek parmak kullan.</strong> Parmağını kaldırırsan sayaç durmaz; son turkuaz noktadan yeniden tutarak devam edebilirsin. Bu devam kuralı trainer tercihidir.</p>
+     <p><strong>Şekli parçalara ayır:</strong> “sağa iki, çapraz yukarı, sola üç” gibi bağlantıları say. Kesişimde en yakın nokta değil, sıradaki doğru nokta önemlidir.</p>
+    </details>
+    <p id="settingsNote" class="settings-note"></p>
+   </div>
+   <p id="reason" class="error-reason" hidden></p>
+   <div id="stats" class="stats" hidden></div>
+   <p id="resultLabel" class="result-label" hidden></p>
+   <button type="button" class="main-btn" id="mainAction">PROVAYA BAŞLA</button>
+   <button type="button" class="main-btn secondary-btn" id="secondaryAction" hidden>HATAYI İNCELE</button>
+   <button type="button" class="link-btn" id="settingsAction" hidden>AYARLARA DÖN</button>
+   <button type="button" class="link-btn" id="demoAction">Seçili şeklin örnek çizimini izle · puansız</button>
+  </div>
+ </div>
+ <span id="accessibleState" style="position:absolute;width:1px;height:1px;overflow:hidden" aria-live="polite"></span>
+</section>
+<script>
+(()=>{
+ 'use strict';
+ const BUILD='TRC-20260930-01';
+ const REFERENCE=[{"radius":1,"path":[[0,0],[1,0],[1,-1],[0,-1]],"lead":0.1837,"step":0.3667,"hold":0.8832,"preview":2.167,"limit":6,"videoStart":0.033,"videoInput":2.2,"referenceFrame":1.8},{"radius":1,"path":[[-1,1],[-1,0],[0,0],[0,1],[1,0]],"lead":0.3611,"step":0.3528,"hold":0.7947,"preview":2.567,"limit":6.9,"videoStart":4.3,"videoInput":6.8666667,"referenceFrame":6.4},{"radius":2,"path":[[-1,-1],[-2,0],[-1,0],[0,-1],[1,-2],[1,-1]],"lead":0.3663,"step":0.3333,"hold":0.7672,"preview":2.8,"limit":7.6,"videoStart":9.167,"videoInput":11.9666667,"referenceFrame":11.5},{"radius":2,"path":[[1,-1],[2,-2],[1,-2],[0,-1],[0,-2],[-1,-1],[-1,0]],"lead":0.3903,"step":0.32,"hold":0.7567,"preview":3.067,"limit":7.9,"videoStart":14.533,"videoInput":17.6,"referenceFrame":17.1},{"radius":2,"path":[[0,2],[-1,2],[-2,2],[-1,1],[0,1],[1,1],[1,0],[1,-1]],"lead":0.417,"step":0.3,"hold":0.75,"preview":3.267,"limit":8.2,"videoStart":21.233,"videoInput":24.5,"referenceFrame":24.0},{"radius":3,"path":[[2,1],[2,0],[3,0],[3,-1],[3,-2],[3,-3],[2,-3],[1,-3],[0,-3]],"lead":0.3833,"step":0.3,"hold":0.6837,"preview":3.467,"limit":8.7,"videoStart":28.1,"videoInput":31.5666667,"referenceFrame":31.1},{"radius":3,"path":[[-3,1],[-2,1],[-2,0],[-1,0],[-1,-1],[0,-2],[1,-2],[1,-3],[0,-3],[-1,-2]],"lead":0.425,"step":0.2833,"hold":0.6583,"preview":3.633,"limit":9.3,"videoStart":35.7,"videoInput":39.3333333,"referenceFrame":38.9},{"radius":3,"path":[[-1,3],[-2,3],[-1,2],[-2,2],[-1,1],[0,0],[0,1],[1,0],[1,1],[2,1],[2,0]],"lead":0.3997,"step":0.2667,"hold":0.6993,"preview":3.766,"limit":9.7,"videoStart":43.867,"videoInput":47.6333333,"referenceFrame":47.2},{"radius":3,"path":[[-1,-1],[-2,-1],[-2,0],[-1,0],[0,0],[1,0],[2,0],[1,1],[0,1],[-1,1],[-2,2],[-3,2]],"lead":0.352,"step":0.2571,"hold":0.6529,"preview":3.833,"limit":10.2,"videoStart":53.767,"videoInput":57.6,"referenceFrame":57.2},{"radius":3,"path":[[-1,-2],[0,-2],[0,-1],[-1,0],[-2,1],[-2,0],[-3,0],[-3,1],[-3,2],[-3,3],[-2,2],[-1,1],[-1,2]],"lead":0.4103,"step":0.24,"hold":0.6767,"preview":3.967,"limit":10.6,"videoStart":64.433,"videoInput":68.4,"referenceFrame":67.9},{"radius":3,"path":[[-2,2],[-2,3],[-3,3],[-3,2],[-3,1],[-3,0],[-2,0],[-1,-1],[-1,-2],[-2,-1],[-3,0],[-2,0],[-2,1],[-1,1]],"lead":0.403,"step":0.2303,"hold":0.6031,"preview":4.0,"limit":11.1,"videoStart":77.0,"videoInput":81,"referenceFrame":80.6},{"radius":3,"path":[[0,2],[1,2],[0,3],[-1,3],[-1,2],[-1,1],[0,0],[1,0],[1,1],[2,0],[2,-1],[1,-1],[2,-2],[2,-3],[1,-2]],"lead":0.3837,"step":0.2167,"hold":0.6495,"preview":4.067,"limit":11.5,"videoStart":89.733,"videoInput":93.8,"referenceFrame":93.4}];
+ const $=id=>document.getElementById(id),canvas=$('surface'),ctx=canvas.getContext('2d',{alpha:false});
+ if(!ctx){$('bootWarning').textContent='Bu tarayıcı çizim alanını açamadı. Güncel bir tarayıcıda yayımlanmış sayfayı aç.';return;}
+ const SQ=Math.sqrt(3)/2,DIRS=[[1,0],[0,1],[-1,1],[-1,0],[0,-1],[1,-1]],KEY='traceHub.v1.best.normal';
+ const storage={get(k){try{return localStorage.getItem(k);}catch(_){return null;}},set(k,v){try{localStorage.setItem(k,String(v));return true;}catch(_){return false;}}};
+ const storedBest=Number(storage.get(KEY));let best=Number.isFinite(storedBest)&&storedBest>=0?storedBest:0,mode='challenge',cfg={route:'video',pace:1,start:0,tolerance:.25,guide:false};
+ let state='closed',pausedState='',phase=0,remaining=0,elapsed=0,score=0,completed=0,errors=0,roundIndex=0,current=null,nodeList=[],path=[],cursor=0,roundScore=0;
+ let width=1,height=1,dpr=1,safeTop=0,safeBottom=0,unit=1,cx=0,cy=0,scale=1,raf=0,lastStamp=0,manual=false,runBest=false;
+ let pointerId=null,latched=false,previous=null,rawTrail=[],lastError=null,demonstrating=false,panelKind='ready',hintUntil=0,resumeRemaining=0,reviewReturn='',seed=0,roundCache=new Map();
+ const clamp=(x,a,b)=>Math.max(a,Math.min(b,x)),copy=x=>JSON.parse(JSON.stringify(x)),eq=(a,b)=>a&&b&&a[0]===b[0]&&a[1]===b[1];
+ const world=a=>({x:a[0]+a[1]/2,y:a[1]*SQ});
+ const screen=p=>({x:cx+p.x*unit,y:cy+p.y*unit});
+ const toWorld=e=>{const r=canvas.getBoundingClientRect();return {x:(e.clientX-r.left-cx)/unit,y:(e.clientY-r.top-cy)/unit};};
+ const allNodes=R=>{const a=[];for(let r=-R;r<=R;r++)for(let q=Math.max(-R,-r-R);q<=Math.min(R,-r+R);q++)a.push([q,r]);return a;};
+ const active=()=>['preview','answer','success','demo','resume'].includes(state);
+ const cancel=()=>{if(raf)cancelAnimationFrame(raf);raf=0;};
+ function schedule(){if(!manual&&active()&&!raf)raf=requestAnimationFrame(frame);}
+ function rnd(){seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;}
+ function release(){const id=pointerId;pointerId=null;latched=false;previous=null;rawTrail=[];if(id!==null)try{if(canvas.hasPointerCapture(id))canvas.releasePointerCapture(id);}catch(_){}}
+ function homeBest(){$('homeBest').textContent=best?'Rekor: '+best:'Rekor: —';}
+ function eligible(){return mode==='challenge'&&cfg.route==='video'&&cfg.pace===1&&cfg.start===0&&cfg.tolerance===.25&&!cfg.guide&&!demonstrating&&!manual;}
+ function randomRound(i){
+  const R=i<2?1:i<5?2:3,ns=allNodes(R),n=Math.min(i+3,22);let p=[ns[Math.floor(rnd()*ns.length)]];
+  const used=new Map();
+  for(let k=0;k<n;k++){
+   const a=p[p.length-1],prev=p.length>1?p[p.length-2]:null;
+   let opts=DIRS.map(d=>[a[0]+d[0],a[1]+d[1]]).filter(b=>Math.max(Math.abs(b[0]),Math.abs(b[1]),Math.abs(b[0]+b[1]))<=R&&!eq(b,prev));
+   // Prefer fresh edges, while retaining occasional loops at advanced levels.
+   let fresh=opts.filter(b=>!used.has([a.join(','),b.join(',')].sort().join('|')));
+   if(fresh.length)opts=fresh;
+   const b=opts[Math.floor(rnd()*opts.length)];used.set([a.join(','),b.join(',')].sort().join('|'),1);p.push(b);
+  }
+  const step=Math.max(.16,.233*Math.pow(.98,Math.max(0,i-11))),lead=.36,hold=.65;
+  return {radius:R,path:p,step,lead,hold,preview:lead+n*step+hold,limit:Math.min(18,11.5+Math.max(0,i-11)*.4),generated:true};
+ }
+ function getRound(i){
+  if(cfg.route==='video'&&i<REFERENCE.length)return {...copy(REFERENCE[i]),generated:false};
+  if(!roundCache.has(i))roundCache.set(i,randomRound(i));return copy(roundCache.get(i));
+ }
+ function readSettings(){
+  cfg={route:$('route').value==='random'?'random':'video',pace:Number($('pace').value)||1,start:clamp(Number($('startRound').value)||0,0,11),tolerance:Number($('tolerance').value)||.25,guide:mode!=='challenge'&&$('guide').checked};
+ }
+ function fillSettings(){
+  const labels=['Video provası','Süresiz öğren','Şekil atölyesi'];
+  $('panelTitle').textContent=labels[['challenge','learn','workshop'].indexOf(mode)];
+  $('panelIntro').textContent='Sarı yolu izle. Yol kaybolunca turkuaz başlangıçtan aynı sırayla çiz. Her doğru bağlantı 1 puan.';
+  $('guideLabel').hidden=mode==='challenge';if(mode==='challenge')$('guide').checked=false;
+  $('mini').hidden=mode!=='workshop';
+  $('settingsNote').textContent=mode==='challenge'?'Süreli prova. Normal hassasiyet, 1× tempo ve 1. şekilden başlangıç kişisel prova rekoruna sayılır. 12. şekilden sonra açıkça etiketlenen yeni yollar üretilir.':mode==='workshop'?'Seçtiğin şekil tekrar eder. Süre sınırsızdır; hızlı bölüm baştan çalışılır. Bu mod prova rekoruna yazılmaz.':'Süre sınırsız. Hata sonrası aynı şekli yeniden izleyebilirsin. Rehber yalnız bu çalışma içindir; prova rekoruna yazılmaz.';
+  drawMini();
+ }
+ function startConfig(newMode){
+  cancel();release();mode=newMode||mode;demonstrating=false;manual=false;state='ready';
+  $('home').hidden=true;$('game').hidden=false;document.body.style.overflow='hidden';
+  readSettings();score=0;completed=0;errors=0;elapsed=0;roundIndex=cfg.start;seed=190730;roundCache.clear();loadRound(roundIndex);state='ready';
+  panel('ready');resize(false);fillSettings();render();
+ }
+ function loadRound(i){
+  release();roundIndex=i;for(const k of roundCache.keys())if(k<i-24)roundCache.delete(k);current=getRound(i);nodeList=allNodes(current.radius).map(a=>({a,p:world(a)}));path=current.path.map(world);cursor=0;phase=0;remaining=current.limit;roundScore=score;lastError=null;hintUntil=0;rawTrail=[];
+  layout();
+ }
+ function begin(demo=false){
+  cancel();release();readSettings();demonstrating=demo;manual=false;score=0;completed=0;errors=0;elapsed=0;lastError=null;runBest=false;
+  seed=(Math.random()*4294967295)>>>0;roundCache.clear();loadRound(cfg.start);state='preview';phase=0;hidePanel();lastStamp=performance.now();announce('Şekli izle.');render();schedule();
+ }
+ function repeatShape(){
+  cancel();release();score=roundScore;loadRound(roundIndex);state='preview';hidePanel();lastStamp=performance.now();render();schedule();
+ }
+ function hidePanel(){$('hint').textContent='Yolu yeniden göster';$('againShape').textContent='Bu şekli tekrar et';$('overlay').hidden=true;$('pause').hidden=!active();$('practiceTools').hidden=!(mode!=='challenge'&&state==='answer'&&!demonstrating);$('toast').hidden=true;}
+ function panel(kind,message=''){
+  panelKind=kind;$('overlay').hidden=false;$('pause').hidden=true;$('practiceTools').hidden=true;$('toast').hidden=true;
+  const ready=kind==='ready';$('settings').hidden=!ready;$('panelIntro').hidden=!ready;$('reason').hidden=ready;$('stats').hidden=ready||kind==='paused';$('resultLabel').hidden=ready||kind==='paused';$('settingsAction').hidden=ready;$('demoAction').hidden=!ready;$('secondaryAction').hidden=true;
+  $('panelKicker').textContent=demonstrating?'PUANSIZ ÖRNEK · GERÇEK KAYIT DEĞİL':'TRACE V1 · BAĞIMSIZ PROVA';
+  if(ready){fillSettings();$('mainAction').textContent=mode==='challenge'?'PROVAYA BAŞLA':'ÇALIŞMAYA BAŞLA';}
+  else if(kind==='paused'){$('panelTitle').textContent='Duraklatıldı';$('reason').textContent='Şekil ve sayaç aynı yerde bekliyor. Devam ederken kısa bir hazırlık süresi var.';$('mainAction').textContent='DEVAM ET';}
+  else if(kind==='demoEnd'){$('panelTitle').textContent='Sıra sende.';$('reason').textContent='Bu, seçili şeklin örnek çizimiydi. Videodaki parmak hareketlerini oynatmıyor; doğru bağlantı sırasını gösteriyor.';$('mainAction').textContent='BEN ÇİZEYİM';$('stats').hidden=true;$('resultLabel').hidden=true;}
+  else{
+   $('panelTitle').textContent=mode==='challenge'?score+' PUAN':'Bir daha hatırla.';
+   $('reason').textContent=message||'Yanlış noktaya geldin.';$('mainAction').textContent=mode==='challenge'?'BAŞTAN TEKRAR':'AYNI ŞEKLİ TEKRAR';
+   $('secondaryAction').hidden=false;$('secondaryAction').textContent='HATAYI İNCELE';
+   $('stats').innerHTML=[[score,'Doğru bağlantı'],[completed,'Tamamlanan şekil'],[roundIndex+1,'Ulaşılan şekil'],[elapsed.toFixed(1)+' sn','Aktif deneme süresi']].map(([n,l])=>'<div class="stat"><strong>'+n+'</strong>'+l+'</div>').join('');
+   $('resultLabel').textContent=eligible()?'1× prova rekoru: '+best+(runBest?' · Yeni rekor':''):'Bu ayar çalışma modudur; 1× prova rekoruna eklenmez.';
+  }
+ }
+ function onMain(){
+  if(panelKind==='ready')begin();else if(panelKind==='paused')resume();else if(panelKind==='demoEnd'){demonstrating=false;begin();}else if(mode==='challenge')begin();else repeatShape();
+ }
+ function leave(){cancel();release();state='closed';manual=false;demonstrating=false;$('game').hidden=true;$('home').hidden=false;document.body.style.overflow='';homeBest();}
+ function announce(t){$('accessibleState').textContent=t;}
+ function toast(t){$('toast').firstElementChild.textContent=t;$('toast').hidden=false;}
+ function answerBegin(){state=demonstrating?'demo':'answer';phase=0;remaining=current.limit;cursor=0;release();hidePanel();announce('Hafızadan çiz. Başlangıç noktası turkuaz.');}
+ function success(){
+  state='success';phase=0;release();hidePanel();if(!demonstrating)completed++;announce('Şekil tamamlandı. '+score+' puan.');
+ }
+ function fail(type,node=null){
+  if(state!=='answer')return;
+  if(type==='time')remaining=0;
+  lastError={type,wrong:node?node.a.slice():null,expected:current.path[cursor+1]||null,current:current.path[cursor],trail:rawTrail.slice(-160),cursor};errors++;
+  state='over';cancel();release();runBest=false;
+  if(eligible()&&score>best){best=score;storage.set(KEY,String(best));runBest=true;homeBest();}
+  const message=type==='time'?'Süre doldu. Yolun dönüş sırasını daha kısa gruplar halinde hatırla.':type==='start'?'Başlangıç noktası bu değildi. Sarı gösterimin ilk noktasını izle; çizim turkuaz başlangıçtan başlar.':'Sıradaki bağlantı yerine başka bir noktaya girdin. Kesişimde veya uzun düz hatta nokta sayısını kontrol et.';
+  panel('over',message);announce(message);render();
+ }
+ function update(dt){
+  if(!Number.isFinite(dt)||dt<=0)return;
+  let d=dt*cfg.pace;
+  // Consume phase boundaries exactly; refresh rate cannot change timing.
+  for(let guard=0;guard<30&&d>1e-10;guard++){
+   if(state==='resume'){
+    const used=Math.min(d,resumeRemaining);resumeRemaining-=used;d-=used;if(resumeRemaining>1e-9)break;state=pausedState;release();hidePanel();continue;
+   }
+   if(state==='preview'){
+    const used=Math.min(d,Math.max(0,current.preview-phase));phase+=used;elapsed+=used/cfg.pace;d-=used;
+    if(phase>=current.preview-1e-9){answerBegin();continue;}break;
+   }
+   if(state==='answer'){
+    const used=mode==='challenge'?Math.min(d,remaining):d;phase+=used;elapsed+=used/cfg.pace;if(mode==='challenge')remaining=Math.max(0,remaining-used);d-=used;
+    if(mode==='challenge'&&remaining<=1e-9)fail('time');break;
+   }
+   if(state==='demo'){
+    const duration=.6+(path.length-1)*.38;const used=Math.min(d,duration-phase);phase+=used;d-=used;
+    cursor=Math.min(path.length-1,Math.max(0,Math.floor((phase-.6)/.38)));
+    if(phase>=duration-1e-9){cursor=path.length-1;success();continue;}break;
+   }
+   if(state==='success'){
+    const used=Math.min(d,.65-phase);phase+=used;elapsed+=used/cfg.pace;d-=used;
+    if(phase>=.65-1e-9){
+     if(demonstrating){state='demoEnd';cancel();panel('demoEnd');break;}
+     if(mode==='workshop'){score=roundScore;loadRound(roundIndex);}else loadRound(roundIndex+1);
+     state='preview';hidePanel();continue;
+    }break;
+   }
+   break;
+  }
+ }
+ function advance(t){
+  if(manual)return;const dt=Math.max(0,(t-lastStamp)/1000);lastStamp=t;
+  if(dt>.4){pause(false);return;}update(dt);
+ }
+ function frame(t){raf=0;if(!active())return;advance(t);render();schedule();}
+ function pause(first=true){
+  if(!active())return;
+  if(first&&!manual){const now=performance.now();if(now-lastStamp<400)advance(now);}
+  if(!active())return;
+  pausedState=state==='resume'?pausedState:state;state='paused';cancel();release();panel('paused');render();
+ }
+ function resume(){if(state!=='paused')return;state='resume';resumeRemaining=.65*cfg.pace;hidePanel();lastStamp=performance.now();render();schedule();}
+ function review(){reviewReturn='over';state='review';$('overlay').hidden=true;$('practiceTools').hidden=false;$('hint').textContent='SONUCA DÖN';$('againShape').textContent=mode==='challenge'?'BAŞTAN TEKRAR':'AYNI ŞEKLİ TEKRAR';$('pause').hidden=true;render();}
+ function reveal(){
+  if(state==='review'){state='over';$('hint').textContent='Yolu yeniden göster';$('againShape').textContent='Bu şekli tekrar et';panel('over',$('reason').textContent);render();return;}
+  if(state!=='answer'||mode==='challenge')return;hintUntil=phase+1.5*cfg.pace;render();
+ }
+ function nodeAt(p){let out=null,dist=cfg.tolerance;for(const n of nodeList){const d=Math.hypot(n.p.x-p.x,n.p.y-p.y);if(d<=dist){dist=d;out=n;}}return out;}
+ function accept(n){
+  if(state!=='answer'||!n)return;
+  if(eq(n.a,current.path[cursor]))return;
+  if(!eq(n.a,current.path[cursor+1])){fail('node',n);return;}
+  cursor++;score++;$('toast').hidden=true;
+  if(cursor===path.length-1)success();
+ }
+ function beginPointer(p,id){
+  if(state!=='answer'||pointerId!==null)return false;
+  const n=nodeAt(p);
+  if(!n||!eq(n.a,current.path[cursor])){
+   if(n)fail(cursor===0?'start':'node',n);else toast(cursor===0?'Turkuaz başlangıç noktasından tut.':'Son turkuaz noktadan yeniden tut.');
+   return false;
+  }
+  pointerId=id;latched=true;previous=p;rawTrail=[p];$('toast').hidden=true;return true;
+ }
+ function crossings(a,b){
+  const dx=b.x-a.x,dy=b.y-a.y,A=dx*dx+dy*dy;if(A<1e-12)return [];
+  const hits=[],R=cfg.tolerance;
+  for(const n of nodeList){
+   if(eq(n.a,current.path[cursor]))continue;
+   const fx=a.x-n.p.x,fy=a.y-n.p.y,B=2*(fx*dx+fy*dy),C=fx*fx+fy*fy-R*R;
+   // Ignore nodes whose disk already contained the last sample: no double scoring.
+   if(C<=0)continue;
+   const disc=B*B-4*A*C;if(disc<0)continue;const t=(-B-Math.sqrt(disc))/(2*A);
+   if(t>=-1e-8&&t<=1+1e-8)hits.push({t:clamp(t,0,1),n});
+  }
+  return hits.sort((a,b)=>a.t-b.t);
+ }
+ function movePointer(p){
+  if(state!=='answer'||!latched||!previous)return;
+  rawTrail.push(p);if(rawTrail.length>300)rawTrail.splice(0,60);
+  const hits=crossings(previous,p);
+  for(const h of hits){if(state!=='answer')break;accept(h.n);}
+  if(state==='answer')previous=p;
+ }
+ function pointerDown(e){
+  if(e.pointerType==='mouse'&&e.button!==0)return;if(state!=='answer'||pointerId!==null)return;e.preventDefault();
+  if(!manual)advance(performance.now());if(state!=='answer')return;
+  if(beginPointer(toWorld(e),e.pointerId))try{canvas.setPointerCapture(e.pointerId);}catch(_){}
+  render();
+ }
+ function pointerMove(e){
+  if(e.pointerId!==pointerId||state!=='answer')return;e.preventDefault();if(!manual)advance(performance.now());if(state!=='answer')return;
+  const batch=e.getCoalescedEvents?e.getCoalescedEvents():[];
+  for(const p of batch.length?batch:[e]){if(state!=='answer')break;movePointer(toWorld(p));}render();
+ }
+ function pointerUp(e){
+  if(e.pointerId!==pointerId)return;e.preventDefault();if(!manual)advance(performance.now());
+  if(state==='answer')movePointer(toWorld(e));release();render();
+ }
+ if(window.PointerEvent){
+  canvas.addEventListener('pointerdown',pointerDown,{passive:false});canvas.addEventListener('pointermove',pointerMove,{passive:false});canvas.addEventListener('pointerup',pointerUp,{passive:false});
+  canvas.addEventListener('pointercancel',()=>{release();pause(false);},{passive:false});canvas.addEventListener('lostpointercapture',e=>{if(e.pointerId===pointerId){release();render();}});
+ }else{
+  // Single-touch fallback, with no parallel mouse listener to prevent ghost input.
+  canvas.addEventListener('touchstart',e=>{if(e.changedTouches.length&&pointerId===null){e.preventDefault();const t=e.changedTouches[0];pointerDown({pointerId:t.identifier,pointerType:'touch',clientX:t.clientX,clientY:t.clientY,preventDefault(){}});}},{passive:false});
+  canvas.addEventListener('touchmove',e=>{for(const t of e.changedTouches)if(t.identifier===pointerId){e.preventDefault();pointerMove({pointerId:t.identifier,clientX:t.clientX,clientY:t.clientY,preventDefault(){}});}},{passive:false});
+  canvas.addEventListener('touchend',e=>{for(const t of e.changedTouches)if(t.identifier===pointerId){e.preventDefault();pointerUp({pointerId:t.identifier,clientX:t.clientX,clientY:t.clientY,preventDefault(){}});}},{passive:false});
+  canvas.addEventListener('touchcancel',()=>pause(false));
+ }
+ canvas.addEventListener('contextmenu',e=>e.preventDefault());
+ function layout(){
+  if(!current)return;
+  const availableH=Math.max(100,height-safeTop-safeBottom);
+  scale=Math.min(width/512,availableH/580);const r=current.radius;
+  unit=512*({1:.282,2:.169,3:.112}[r]||.112)*scale;cx=width/2;
+  const extent=Math.max(.7,r*SQ+.24)*unit;
+  // Circles keep their aspect ratio. Only the board's vertical anchor is responsive.
+  const minCY=safeTop+175*scale+extent,maxCY=height-safeBottom-52*scale-extent;
+  cy=minCY<=maxCY?clamp(safeTop+availableH*.62,minCY,maxCY):safeTop+availableH*.64;
+ }
+ function resize(allowPause=true){
+  if(state==='closed')return;
+  const b=canvas.getBoundingClientRect(),w=Math.max(1,b.width),h=Math.max(1,b.height);
+  if(allowPause&&active()&&(Math.abs(w-width)>8||Math.abs(h-height)>16))pause(false);
+  width=w;height=h;dpr=Math.min(window.devicePixelRatio||1,3);
+  const cs=getComputedStyle($('game'));safeTop=parseFloat(cs.paddingTop)||0;safeBottom=parseFloat(cs.paddingBottom)||0;
+  canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);layout();render();
+ }
+ function circle(x,y,r,color){ctx.fillStyle=color;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();}
+ function roundRect(x,y,w,h,r,color){ctx.fillStyle=color;ctx.beginPath();if(ctx.roundRect)ctx.roundRect(x,y,w,h,r);else ctx.rect(x,y,w,h);ctx.fill();}
+ function txt(str,x,y,size,color='#fff',weight=700){ctx.font=weight+' '+size+'px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif';ctx.fillStyle=color;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(str,x,y);}
+ function linePath(points,n,color,alpha=1){
+  if(!points.length||n<0)return;ctx.save();ctx.globalAlpha=alpha;ctx.strokeStyle=color;ctx.lineWidth=unit*.145;ctx.lineCap='round';ctx.lineJoin='round';ctx.beginPath();let p=screen(points[0]);ctx.moveTo(p.x,p.y);
+  const whole=Math.min(Math.floor(n),points.length-1);
+  for(let i=1;i<=whole;i++){p=screen(points[i]);ctx.lineTo(p.x,p.y);}
+  if(whole<points.length-1&&n>whole){const f=n-whole,a=points[whole],b=points[whole+1];p=screen({x:a.x+(b.x-a.x)*f,y:a.y+(b.y-a.y)*f});ctx.lineTo(p.x,p.y);}ctx.stroke();
+  for(let i=0;i<=whole;i++){p=screen(points[i]);circle(p.x,p.y,unit*.185,color);}ctx.restore();
+ }
+ function render(){
+  if(state==='closed'||!current)return;
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  const g=ctx.createLinearGradient(0,0,width*.8,height);g.addColorStop(0,'#204bff');g.addColorStop(.53,'#103ded');g.addColorStop(1,'#0631d8');ctx.fillStyle=g;ctx.fillRect(0,0,width,height);
+  const top=safeTop,availableH=height-safeTop-safeBottom;
+  const generated=current.generated;
+  const tag=demonstrating?'PUANSIZ ÖRNEK':generated?'ÜRETİLMİŞ DEVAM':mode==='challenge'?'VİDEO REFERANSI':'ANTRENMAN';
+  roundRect(cx-88*scale,top+16*scale,176*scale,22*scale,11*scale,'#061d6d50');txt(tag,cx,top+27*scale,9.5*scale,'#dfeeff',750);
+  txt(demonstrating?'—':String(score),cx,top+91*scale,67*scale,'#fbfdff',950);
+  const status=state==='preview'?'YOLU İZLE':state==='answer'?'HAFIZADAN ÇİZ':state==='success'?'TAMAM':state==='review'?'HATA İNCELEMESİ':demonstrating?'ÖRNEK ÇİZİM':'TRACE';
+  txt('ŞEKİL '+(roundIndex+1)+'  ·  '+status,cx,top+142*scale,9*scale,'#b7cbff',700);
+  if((state==='answer'||state==='over'||state==='paused'||state==='resume')&&mode==='challenge'&&!demonstrating){
+   const w=Math.min(width*.76,390*scale),x=cx-w/2,y=top+176*scale,h=10*scale;
+   roundRect(x,y,w,h,6*scale,'#8a9eff3b');const f=clamp(remaining/current.limit,0,1);if(f>0)roundRect(x,y,Math.max(h*.65,w*f),h,6*scale,'#ffed76');
+  }else if(mode!=='challenge'&&state==='answer')txt('SÜRESİZ · '+cursor+'/'+(path.length-1)+' BAĞLANTI',cx,top+179*scale,10*scale,'#c0d7ff',650);
+  for(const n of nodeList){const p=screen(n.p);circle(p.x,p.y,unit*.122,'rgba(133,160,255,.46)');}
+  if(state==='preview'){
+   const n=clamp((phase-current.lead)/current.step,0,path.length-1);let alpha=1;
+   // Short measured-style fade before the route disappears; never show the answer in challenge.
+   if(current.preview-phase<.11)alpha=clamp((current.preview-phase)/.11,.05,1);
+   linePath(path,n,'#ffed72',alpha);
+  }else if(state==='answer'||state==='success'||state==='over'||state==='demo'||state==='review'){
+   if(state==='review'||(mode!=='challenge'&&state==='answer'&&(cfg.guide||phase<hintUntil)))linePath(path,path.length-1,'#ffe972',state==='review'?.42:.22);
+   const n=state==='demo'?clamp((phase-.6)/.38,0,path.length-1):cursor;
+   linePath(path,n,state==='over'?'#ff658c':'#73ece0');
+   if(state==='answer'){
+    const p=screen(path[cursor]);ctx.strokeStyle='#bbfff4';ctx.lineWidth=1.6*scale;ctx.beginPath();ctx.arc(p.x,p.y,unit*.24,0,Math.PI*2);ctx.stroke();
+    if(latched&&previous){const t=screen(previous);ctx.save();ctx.strokeStyle='#b5fff169';ctx.lineWidth=unit*.07;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(t.x,t.y);ctx.stroke();ctx.restore();}
+   }
+   if(state==='review'&&lastError){
+    if(lastError.expected){const p=screen(world(lastError.expected));ctx.strokeStyle='#fff08a';ctx.lineWidth=3*scale;ctx.beginPath();ctx.arc(p.x,p.y,unit*.28,0,Math.PI*2);ctx.stroke();}
+    if(lastError.wrong){const p=screen(world(lastError.wrong));circle(p.x,p.y,unit*.21,'#ff527f');ctx.strokeStyle='#fff';ctx.lineWidth=2*scale;ctx.beginPath();ctx.moveTo(p.x-4*scale,p.y-4*scale);ctx.lineTo(p.x+4*scale,p.y+4*scale);ctx.moveTo(p.x+4*scale,p.y-4*scale);ctx.lineTo(p.x-4*scale,p.y+4*scale);ctx.stroke();}
+    txt('SARI HALKA: SIRADAKİ DOĞRU NOKTA',cx,height-safeBottom-105*scale,9*scale,'#fff2a5',750);
+   }
+  }
+  if(state==='resume'){
+   roundRect(cx-92*scale,cy-42*scale,184*scale,84*scale,18*scale,'#071957dd');txt('Hazır ol…',cx,cy,24*scale,'#f3f8ff',800);
+  }
+  if(state==='answer'&&mode==='challenge'&&cursor===0&&!latched)txt('Turkuaz noktadan başla',cx,height-safeBottom-34*scale,10*scale,'#cbddff',600);
+ }
+ function drawMini(){
+  const mini=$('mini');if(mini.hidden)return;const C=mini.getContext('2d');if(!C)return;const b=mini.getBoundingClientRect(),w=Math.max(250,b.width),h=Math.max(120,b.height),D=Math.min(window.devicePixelRatio||1,2);mini.width=w*D;mini.height=h*D;C.setTransform(D,0,0,D,0,0);C.fillStyle='#1542e8';C.fillRect(0,0,w,h);
+  const d=REFERENCE[Number($('startRound').value)||0],un=Math.min((w-50)/(2*d.radius+1),(h-26)/(2*d.radius*SQ+.6));const pp=a=>{const p=world(a);return {x:w/2+p.x*un,y:h/2+p.y*un};};
+  for(const a of allNodes(d.radius)){const p=pp(a);C.fillStyle='#7297ff80';C.beginPath();C.arc(p.x,p.y,un*.1,0,Math.PI*2);C.fill();}
+  C.strokeStyle='#ffed75';C.lineWidth=un*.13;C.lineCap='round';C.lineJoin='round';C.beginPath();d.path.forEach((a,i)=>{const p=pp(a);i?C.lineTo(p.x,p.y):C.moveTo(p.x,p.y);});C.stroke();
+  for(const a of d.path){const p=pp(a);C.fillStyle='#ffed75';C.beginPath();C.arc(p.x,p.y,un*.15,0,Math.PI*2);C.fill();}const p=pp(d.path[0]);C.strokeStyle='#86fff0';C.lineWidth=2;C.beginPath();C.arc(p.x,p.y,un*.24,0,Math.PI*2);C.stroke();
+ }
+ REFERENCE.forEach((r,i)=>{const o=document.createElement('option');o.value=i;o.textContent=(i+1)+'. şekil · '+(r.path.length-1)+' bağlantı';$('startRound').appendChild(o);});
+ document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>startConfig(b.dataset.mode)));
+ $('mainAction').addEventListener('click',onMain);$('settingsAction').addEventListener('click',()=>startConfig(mode));$('demoAction').addEventListener('click',()=>begin(true));$('secondaryAction').addEventListener('click',review);
+ $('exit').addEventListener('click',leave);$('pause').addEventListener('click',()=>pause());$('hint').addEventListener('click',reveal);$('againShape').addEventListener('click',()=>{if(state==='review'&&mode==='challenge')begin();else repeatShape();});
+ for(const id of ['route','pace','startRound','tolerance','guide'])$(id).addEventListener('change',()=>{if(state==='ready'){readSettings();loadRound(cfg.start);fillSettings();render();}});
+ document.addEventListener('visibilitychange',()=>{if(document.hidden)pause(false);});window.addEventListener('blur',()=>pause(false));window.addEventListener('pagehide',()=>pause(false));
+ let resizeRaf=0;const onResize=()=>{if(state==='closed'||resizeRaf)return;resizeRaf=requestAnimationFrame(()=>{resizeRaf=0;resize();});};window.addEventListener('resize',onResize);if(window.visualViewport)window.visualViewport.addEventListener('resize',onResize);if(window.ResizeObserver)new ResizeObserver(onResize).observe($('game'));
+ document.addEventListener('keydown',e=>{if(state==='closed'||e.repeat||/^(SELECT|INPUT|TEXTAREA)$/.test(e.target.tagName))return;if(e.code==='Escape'){e.preventDefault();if(state==='paused')resume();else pause();}if(e.code==='Space'&&state==='ready'){e.preventDefault();begin();}});
+ $('refresh').addEventListener('click',()=>{if(location.protocol==='http:'||location.protocol==='https:'){const u=new URL(location.href);u.searchParams.set('v',BUILD+'-'+Date.now());location.replace(u.href);}else location.reload();});
+ // Diagnostics only. No external app control, fabricated score submission or network calls.
+ if(new URLSearchParams(location.search).has('test'))window.__traceTest={
+  reference:()=>copy(REFERENCE),snapshot:()=>({state,mode,score,completed,errors,roundIndex,cursor,phase,remaining,elapsed,unit,cx,cy,width,height,pointerId,latched,raf:!!raf,cfg:copy(cfg),current:copy(current),best}),
+  start:(o={})=>{cancel();release();mode=o.mode||'challenge';cfg={route:'video',pace:1,start:0,tolerance:.25,guide:false,...o};manual=true;demonstrating=false;score=0;completed=0;errors=0;elapsed=0;seed=12345;roundCache.clear();$('home').hidden=true;$('game').hidden=false;document.body.style.overflow='hidden';loadRound(cfg.start);state='preview';hidePanel();resize(false);render();},
+  step:dt=>{update(dt);render();},pause:()=>pause(false),resume,
+  down:(p,id=1)=>{const ok=beginPointer(p,id);render();return ok;},move:p=>{movePointer(p);render();},up:()=>{release();render();},
+  path:()=>copy(path),nodes:()=>nodeList.map(n=>({a:n.a,p:n.p})),client:p=>{const b=canvas.getBoundingClientRect(),s=screen(p);return {x:b.left+s.x,y:b.top+s.y};},
+  review,repeat:repeatShape,exit:leave,
+  solve:()=>{if(state==='preview')update(current.preview-phase+.00001);if(state!=='answer')return false;beginPointer(path[cursor],1);for(let k=cursor+1;k<path.length&&state==='answer';k++)movePointer(path[k]);render();return state==='success';},
+  setPreview:(i,t)=>{cancel();manual=true;demonstrating=false;mode='challenge';cfg={route:'video',pace:1,start:i,tolerance:.25,guide:false};score=REFERENCE.slice(0,i).reduce((a,r)=>a+r.path.length-1,0);$('home').hidden=true;$('game').hidden=false;loadRound(i);state='preview';phase=t===undefined?current.preview-.25:t;hidePanel();resize(false);render();}
+ };
+ $('bootWarning').hidden=true;homeBest();
+})();
+</script>
+</body>
+</html>
